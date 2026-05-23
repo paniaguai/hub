@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>😽 Pawz Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --pink:   #ff6eb4;
+      --orange: #ff9a3c;
+      --yellow: #ffe156;
+      --mint:   #3ce8a0;
+      --sky:    #3cb8ff;
+      --purple: #b96fff;
+      --coral:  #ff5f6d;
+      --lime:   #aaee44;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Nunito', sans-serif;
+      background: #0d0d1a;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+    }
+
+    /* ── Animated starfield background ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% 10%, rgba(185,111,255,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(60,184,255,.15) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 50% 50%, rgba(255,110,180,.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Floating confetti dots ── */
+    .confetti { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+    .dot {
+      position: absolute;
+      border-radius: 50%;
+      opacity: .55;
+      animation: floatUp linear infinite;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(110vh) rotate(0deg); opacity: .6; }
+      100% { transform: translateY(-10vh)  rotate(360deg); opacity: 0; }
+    }
+
+    /* ── Main wrapper ── */
+    .wrapper { position: relative; z-index: 1; width: 100%; max-width: 600px; text-align: center; }
+
+    /* ── Cat emoji ── */
+    .cat {
+      font-size: clamp(90px, 20vw, 140px);
+      display: inline-block;
+      animation: bounce 2.4s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(255,110,180,.6)) drop-shadow(0 0 60px rgba(185,111,255,.4));
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0) rotate(-3deg); }
+      50%       { transform: translateY(-18px) rotate(3deg); }
+    }
+
+    /* ── Title ── */
+    h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 8vw, 3.4rem);
+      letter-spacing: .04em;
+      background: linear-gradient(90deg, var(--pink), var(--orange), var(--yellow), var(--mint), var(--sky), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 300%;
+      animation: shimmer 4s linear infinite;
+      margin-bottom: 8px;
+    }
+    @keyframes shimmer {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,.45);
+      font-size: .95rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 44px;
+    }
+
+    /* ── Button grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      width: 100%;
+    }
+
+    @media (max-width: 440px) { .grid { grid-template-columns: 1fr; } }
+
+    /* ── Individual buttons ── */
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 18px 22px;
+      border-radius: 20px;
+      text-decoration: none;
+      font-family: 'Fredoka One', cursive;
+      font-size: 1.25rem;
+      letter-spacing: .05em;
+      color: #0d0d1a;
+      position: relative;
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.22);
+      transform: translateX(-110%) skewX(-15deg);
+      transition: transform .35s ease;
+    }
+    .btn:hover::before { transform: translateX(110%) skewX(-15deg); }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.04);
+    }
+
+    /* Per-button colors */
+    .btn:nth-child(1) { background: linear-gradient(135deg, var(--pink), var(--orange));    box-shadow: 0 8px 28px rgba(255,110,180,.45); }
+    .btn:nth-child(2) { background: linear-gradient(135deg, var(--sky), var(--mint));       box-shadow: 0 8px 28px rgba(60,184,255,.40); }
+    .btn:nth-child(3) { background: linear-gradient(135deg, var(--purple), var(--pink));    box-shadow: 0 8px 28px rgba(185,111,255,.40); }
+    .btn:nth-child(4) { background: linear-gradient(135deg, var(--orange), var(--yellow));  box-shadow: 0 8px 28px rgba(255,154,60,.40); }
+    .btn:nth-child(5) { background: linear-gradient(135deg, var(--coral), var(--purple));   box-shadow: 0 8px 28px rgba(255,95,109,.40); }
+    .btn:nth-child(6) { background: linear-gradient(135deg, var(--mint), var(--sky));       box-shadow: 0 8px 28px rgba(60,232,160,.40); }
+    .btn:nth-child(7) { background: linear-gradient(135deg, var(--yellow), var(--lime));    box-shadow: 0 8px 28px rgba(255,225,86,.40); }
+    .btn:nth-child(8) { background: linear-gradient(135deg, var(--lime), var(--mint));      box-shadow: 0 8px 28px rgba(170,238,68,.40); }
+
+    .btn:nth-child(1):hover { box-shadow: 0 14px 40px rgba(255,110,180,.65); }
+    .btn:nth-child(2):hover { box-shadow: 0 14px 40px rgba(60,184,255,.60); }
+    .btn:nth-child(3):hover { box-shadow: 0 14px 40px rgba(185,111,255,.60); }
+    .btn:nth-child(4):hover { box-shadow: 0 14px 40px rgba(255,154,60,.60); }
+    .btn:nth-child(5):hover { box-shadow: 0 14px 40px rgba(255,95,109,.60); }
+    .btn:nth-child(6):hover { box-shadow: 0 14px 40px rgba(60,232,160,.60); }
+    .btn:nth-child(7):hover { box-shadow: 0 14px 40px rgba(255,225,86,.60); }
+    .btn:nth-child(8):hover { box-shadow: 0 14px 40px rgba(170,238,68,.60); }
+
+    .btn-icon { font-size: 1.5rem; }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 52px;
+      color: rgba(255,255,255,.2);
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating dots -->
+  <div class="confetti" id="confetti"></div>
+
+  <div class="wrapper">
+    <div class="cat">😽</div>
+    <h1>Pawz Hub</h1>
+    <p class="subtitle">Pick your purr-fect destination</p>
+
+    <div class="grid">
+      <a class="btn" href="https://paniaguai.github.io/pawz/"   target="_blank"><span class="btn-icon">🐾</span> Pawz</a>
+      <a class="btn" href="https://paniaguai.github.io/pawst/"  target="_blank"><span class="btn-icon">⭐</span> Pawst</a>
+      <a class="btn" href="https://paniaguai.github.io/pawfun/" target="_blank"><span class="btn-icon">🎉</span> PawFun</a>
+      <a class="btn" href="https://paniaguai.github.io/corp/"   target="_blank"><span class="btn-icon">🏢</span> Corp</a>
+      <a class="btn" href="https://paniaguai.github.io/class/"  target="_blank"><span class="btn-icon">📚</span> Class</a>
+      <a class="btn" href="https://paniaguai.github.io/love/"   target="_blank"><span class="btn-icon">💖</span> Love</a>
+      <a class="btn" href="https://paniaguai.github.io/pwz/"    target="_blank"><span class="btn-icon">✨</span> Pwz</a>
+      <a class="btn" href="https://paniaguai.github.io/call/"   target="_blank"><span class="btn-icon">📞</span> Call</a>
+    </div>
+  </div>
+
+  <footer>made with 😽 &amp; colour</footer>
+
+  <script>
+    // Generate floating confetti dots
+    const colours = ['#ff6eb4','#ff9a3c','#ffe156','#3ce8a0','#3cb8ff','#b96fff','#ff5f6d','#aaee44'];
+    const container = document.getElementById('confetti');
+    for (let i = 0; i < 38; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot';
+      const size = Math.random() * 10 + 5;
+      d.style.cssText = `
+        width:${size}px; height:${size}px;
+        background:${colours[Math.floor(Math.random()*colours.length)]};
+        left:${Math.random()*100}%;
+        animation-duration:${Math.random()*12+8}s;
+        animation-delay:${Math.random()*10}s;
+      `;
+      container.appendChild(d);
+    }
+  </script>
+</body>
+</html>
